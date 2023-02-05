@@ -1,7 +1,9 @@
 
+import { getAuth, sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
 //import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 
 export default function ForgotPassword() {
@@ -12,6 +14,16 @@ export default function ForgotPassword() {
     
     setEmail(e.target.value);
    
+  }
+  async function onSubmit(e){
+    e.preventDefault()
+    try{
+      const  auth = getAuth()
+      await sendEmailVerification(auth, email)
+      toast.success("email was sent")
+    }catch(error){
+      toast.error("Could not reset your password")    
+    }
   }
   return (
     <section>
@@ -25,7 +37,7 @@ export default function ForgotPassword() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={onSubmit}>
             <input
               
               type="email"
