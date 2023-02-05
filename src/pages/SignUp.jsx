@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
-import {getAuth, createUserWithEmailAndPassword, update, updateProfile} from "firebase/auth"
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth"
 import {db} from "../firebase"
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -36,12 +36,12 @@ export default function SignUp() {
         {displayName: name});
       const user = userCredential.user
       const formDataCopy = {...formData};
-      delete formDataCopy.password;
+      delete formDataCopy.Password;
       formDataCopy.timestamp = 
       serverTimestamp();
       await setDoc(doc(db, "users",
        user.uid),formDataCopy)
-       toast.success("sign up succesfully")
+       toast.success("sign up successful")
        navigate("/")
 
     }catch(error){
@@ -108,7 +108,7 @@ export default function SignUp() {
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
 
               <p className="mb-6">Have a Account?
-                <Link to="/sign-up" className="text-red-600 hover:text-red-700
+                <Link to="/sign-in" className="text-red-600 hover:text-red-700
                 transition duration-200
                 ease-in-out ml-1" 
                 >Sign In</Link>
